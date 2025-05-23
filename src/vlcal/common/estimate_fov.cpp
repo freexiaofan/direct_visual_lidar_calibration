@@ -51,11 +51,13 @@ double estimate_camera_fov(const camera::GenericCameraBase::ConstPtr& proj, cons
 }
 
 double estimate_lidar_fov(const Frame::ConstPtr& points) {
-  auto cloud = pcl::make_shared<pcl::PointCloud<pcl::PointXYZ>>();
+  // auto cloud = std::make_shared<pcl::PointCloud<pcl::PointXYZ>>();
+  pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>());
   cloud->resize(points->size());
   std::transform(points->points, points->points + points->size(), cloud->begin(), [](const auto& p) { return pcl::PointXYZ(p.x(), p.y(), p.z()); });
 
-  auto filtered = pcl::make_shared<pcl::PointCloud<pcl::PointXYZ>>();
+  // auto filtered = std::make_shared<pcl::PointCloud<pcl::PointXYZ>>();
+  pcl::PointCloud<pcl::PointXYZ>::Ptr filtered(new pcl::PointCloud<pcl::PointXYZ>());
   pcl::VoxelGrid<pcl::PointXYZ> voxelgrid;
   voxelgrid.setLeafSize(0.2f, 0.2f, 0.2f);
   voxelgrid.setInputCloud(cloud);
@@ -69,7 +71,7 @@ double estimate_lidar_fov(const Frame::ConstPtr& points) {
   pcl::ConvexHull<pcl::PointXYZ> convexhull;
   convexhull.setInputCloud(cloud);
 
-  auto hull = pcl::make_shared<pcl::PointCloud<pcl::PointXYZ>>();
+  auto hull = std::make_shared<pcl::PointCloud<pcl::PointXYZ>>();
   convexhull.reconstruct(*hull);
 
   // Precompute bearing vectors

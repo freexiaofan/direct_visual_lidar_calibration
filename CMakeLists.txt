@@ -21,34 +21,37 @@ project(direct_visual_lidar_calibration)
 # set(GTSAM_DIR "/home/liunao/calib/gtsam/build")
 # find_package(GTSAM)
 
-# 需要4.2a9版本的gtsam 单独下载编译后
+# 需要4.2a9版本的 gtsam 
+# 指定安装路径 cmake .. 单独下载编译、安装到指定的路径后
+# cmake -DCMAKE_INSTALL_PREFIX=/home/liunao/calib/gtsam/install ..
 # 通过指定路径的方式使用
 # 不影响系统路径下的库文件
 # 设置GTSAM的安装路径
-# set(GTSAM_DIR "/home/liunao/calib/gtsam/install")
+set(GTSAM_DIR "/home/liunao/calib/gtsam/install")
 # 添加GTSAM的库路径
-# link_directories("${GTSAM_DIR}/lib")
+link_directories("${GTSAM_DIR}/lib")
 # # 添加GTSAM的头文件路径
-# include_directories("${GTSAM_DIR}/include")
+include_directories("${GTSAM_DIR}/include")
 # 设置GTSAM的查找路径
-# set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "${GTSAM_DIR}")
-# set(GTSAM_INCLUDE_DIR "${GTSAM_DIR}/include")
-# set(GTSAM_LIBRARY_DIR "${GTSAM_DIR}/lib")
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "${GTSAM_DIR}")
+set(GTSAM_INCLUDE_DIR "${GTSAM_DIR}/include")
+set(GTSAM_LIBRARY_DIR "${GTSAM_DIR}/lib")
 
-# find_package(GTSAM 4.2 REQUIRED)
-find_package(GTSAM  REQUIRED)
-# set(GTSAM_LIBRARIES "/home/liunao/calib/gtsam/install/lib/libgtsam.so")
+find_package(GTSAM 4.2 REQUIRED)
+# find_package(GTSAM  REQUIRED)
+set(GTSAM_LIBRARIES 
+    "${GTSAM_DIR}/../../libgtsam.so"
+    "${GTSAM_DIR}/../../libgtsam_unstable.so"
+)
 
-
-
-
+if(GTSAM_FOUND)  
+message(STATUS "-------------------------Found GTSAM ${GTSAM_VERSION}")
+message(STATUS "-------------------------Found GTSAM ${GTSAM_LIBRARIES}")
+else()
+message(STATUS "GTSAM Not Found")
+endif()
 
 set(OPENCV_DIR "/home/liunao/r3/opencv-4.5.3/build/")
-if(GTSAM_FOUND)  
-  message(STATUS "-------------------------Found GTSAM ${GTSAM_VERSION}")
-else()
-  message(STATUS "GTSAM Not Found")
-endif()
 
 # add_compile_options(-std=c++17)
 set(CMAKE_CXX_STANDARD 17)
@@ -73,7 +76,6 @@ endif()
 
 find_package(PCL REQUIRED)
 find_package(Ceres REQUIRED)
-find_package(GTSAM REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(Boost REQUIRED COMPONENTS filesystem program_options)
 find_package(Iridescence REQUIRED)

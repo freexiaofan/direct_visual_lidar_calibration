@@ -165,7 +165,7 @@ public:
     adjust_euler = adjust_euler * 180.0 / 3.1415926 ;
     ofs <<  std::endl << "R_cl < directly use in fast_livo > :<ZYX> " << std::endl;
     // float Roll = adjust_euler(2);   
-    // float Pitch = adjust_euler(1); 
+    // float Pitch = adjust_euler(1);    
     // float Yaw = adjust_euler(0);
     ofs  << "Roll : " << adjust_euler(2) << " , Pitch : " << adjust_euler(1) <<  " , Yaw : " << adjust_euler(0) << std::endl << std::endl;
 
