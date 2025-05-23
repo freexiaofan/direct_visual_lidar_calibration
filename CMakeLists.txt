@@ -18,10 +18,32 @@ project(direct_visual_lidar_calibration)
 # # 查看OPENGL的版本 增加环境变量
 # # MESA_GL_VERSION_OVERRIDE=6.3
 
-set(GTSAM_DIR "/home/liunao/calib/gtsam/build")
-set(OPENCV_DIR "/home/liunao/r3/opencv-4.5.3/build/")
+# set(GTSAM_DIR "/home/liunao/calib/gtsam/build")
+# find_package(GTSAM)
 
-find_package(GTSAM)
+# 需要4.2a9版本的gtsam 单独下载编译后
+# 通过指定路径的方式使用
+# 不影响系统路径下的库文件
+# 设置GTSAM的安装路径
+# set(GTSAM_DIR "/home/liunao/calib/gtsam/install")
+# 添加GTSAM的库路径
+# link_directories("${GTSAM_DIR}/lib")
+# # 添加GTSAM的头文件路径
+# include_directories("${GTSAM_DIR}/include")
+# 设置GTSAM的查找路径
+# set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "${GTSAM_DIR}")
+# set(GTSAM_INCLUDE_DIR "${GTSAM_DIR}/include")
+# set(GTSAM_LIBRARY_DIR "${GTSAM_DIR}/lib")
+
+# find_package(GTSAM 4.2 REQUIRED)
+find_package(GTSAM  REQUIRED)
+# set(GTSAM_LIBRARIES "/home/liunao/calib/gtsam/install/lib/libgtsam.so")
+
+
+
+
+
+set(OPENCV_DIR "/home/liunao/r3/opencv-4.5.3/build/")
 if(GTSAM_FOUND)  
   message(STATUS "-------------------------Found GTSAM ${GTSAM_VERSION}")
 else()
